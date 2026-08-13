@@ -106,3 +106,9 @@ Add this inside the same `tell newMessage` block as the recipients, before the `
 ## Report back
 
 One message: job name + link, client name/contact captured, invoice total and confirmation it matches the source doc exactly (or the tax-rate-fix note if not), payment recorded, files attached where. Then: draft email created (recipients, not sent), recap doc delivered to Kyle. Flag anything you couldn't verify (e.g. a field that wouldn't save) so Kyle can spot-check it in BT directly. Start with "ok kyle" per global rules, colons not em dashes.
+
+## Where this skill lives and how it stays in sync
+
+`~/.claude/skills/bt-design-client-kickoff` and `~/.claude/skills/bt-new-client` are **symlinks** into `~/nss-org-repo/skills/` — that repo (github.com/noblesolidsurface-lang/NSS-ORG) is the actual source of truth, not the `.claude/skills` folder. Editing the skill through Claude Code edits the real file in the repo automatically because of the symlink — no extra copy step needed.
+
+**Pushing is automatic**, not something to remember to do by hand: a LaunchAgent (`com.nss.autopushskills`, defined in `~/Library/LaunchAgents/com.nss.autopushskills.plist`) runs `~/nss-org-repo/auto_push_skills.sh` every 10 minutes. That script checks for uncommitted changes in the repo and, if there are any, commits and pushes them to GitHub on its own. If you edit this skill and want the push to happen immediately instead of waiting up to 10 minutes, just run the script directly: `bash ~/nss-org-repo/auto_push_skills.sh`. Check `~/nss-org-repo/auto_push.log` to confirm a push went through.
