@@ -198,6 +198,8 @@ def scope_label(scope):
     for needle, label in SCOPE_KEYWORDS:
         if needle in low and label not in hits:
             hits.append(label)
+    # Drop generic labels swallowed by a more specific one ("Bath" vs "Primary Bath").
+    hits = [h for h in hits if not any(h != other and h in other for other in hits)]
     if hits:
         return " + ".join(hits[:2])
     first = str(scope).strip().splitlines()[0].strip(" .:-")
