@@ -309,7 +309,9 @@ def render(payload, strict=False):
             "{}%".format(percent) if percent not in (None, "") else "(not sent)"
         )
     )
-    lines.append("  Design hourly rate: {}".format(hourly if hourly else "(not sent)"))
+    lines.append(
+        "  Design hourly rate: {}".format("{}/hr".format(hourly) if hourly else "(not sent)")
+    )
     lines.append("  Agreement signed:  {}".format(show(signed_on)))
     lines.append("")
 
